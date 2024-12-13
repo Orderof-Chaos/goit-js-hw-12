@@ -31,10 +31,12 @@ searchForm.addEventListener("submit", (event) => {
                     messageColor: "#fafafb"
                 })
                 gallery.innerHTML = ``
+                loader.style.display = `none`;
                 return
                 }
                 if (data.totalHits <= loadedImgs) {
                     contBtn.style.display = `none`;
+                    loader.style.display = `none`;
                     return
                 }
                 
@@ -57,9 +59,9 @@ searchForm.addEventListener("submit", (event) => {
             lightbox.on('show.simplelightbox', function () {
 	 
             });
+            loader.style.display = `none`;
             lightbox.refresh()
         })
-    .finally(() => { loader.style.display = `none`;})
     }
    
 )
@@ -75,6 +77,7 @@ contBtn.addEventListener("click", (event) => {
                     message: "We're sorry, but you've reached the end of search results.",
                     position: "topRight"
                 })
+                    loader.style.display = `none`;
                 return
             }
                 gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
@@ -88,9 +91,9 @@ contBtn.addEventListener("click", (event) => {
             lightbox.on('show.simplelightbox', function () {
 	
             });
+            loader.style.display = `none`;
             lightbox.refresh()
         })
-        .finally(() => { loader.style.display = `none`;})
     }
    
 )
