@@ -37,7 +37,7 @@ searchForm.addEventListener("submit", (event) => {
                     contBtn.style.display = `none`;
                     return
                 }
-                loader.style.display = `none`;
+                
                 contBtn.style.display = `flex`
                 gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
                 page += 1;
@@ -58,10 +58,8 @@ searchForm.addEventListener("submit", (event) => {
 	 
             });
             lightbox.refresh()
-            
-            
         })
-    
+    .finally(() => { loader.style.display = `none`;})
     }
    
 )
@@ -83,7 +81,7 @@ contBtn.addEventListener("click", (event) => {
                 page += 1;
                 loadedImgs += 15;
                 window.scrollBy(scrollParams);
-                loader.style.display = `none`;
+                
         })
         .then(() => {
             let lightbox = new SimpleLightbox(`.gallery a`, { captionsData: "alt", captionDelay: 250 })
@@ -92,7 +90,7 @@ contBtn.addEventListener("click", (event) => {
             });
             lightbox.refresh()
         })
-    
+        .finally(() => { loader.style.display = `none`;})
     }
    
 )
