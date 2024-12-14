@@ -1,10 +1,10 @@
-import{a as w,i as y,S as g}from"./assets/vendor-DEenWwFD.js";(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))i(t);new MutationObserver(t=>{for(const s of t)if(s.type==="childList")for(const a of s.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&i(a)}).observe(document,{childList:!0,subtree:!0});function r(t){const s={};return t.integrity&&(s.integrity=t.integrity),t.referrerPolicy&&(s.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?s.credentials="include":t.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function i(t){if(t.ep)return;t.ep=!0;const s=r(t);fetch(t.href,s)}})();function h(l){return l.map(({webformatURL:r,largeImageURL:i,tags:t,likes:s,views:a,comments:L,downloads:v})=>`
+import{a as v,i as y,S as g}from"./assets/vendor-DEenWwFD.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))r(e);new MutationObserver(e=>{for(const s of e)if(s.type==="childList")for(const i of s.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function l(e){const s={};return e.integrity&&(s.integrity=e.integrity),e.referrerPolicy&&(s.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?s.credentials="include":e.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function r(e){if(e.ep)return;e.ep=!0;const s=l(e);fetch(e.href,s)}})();function m(o){return o.map(({webformatURL:l,largeImageURL:r,tags:e,likes:s,views:i,comments:L,downloads:w})=>`
     
-     <a href="${i}"><li class="gallery-card">
+     <a href="${r}"><li class="gallery-card">
       
       <img class="gallery-img"
-     src="${r}"
-     alt="${t}">
+     src="${l}"
+     alt="${e}">
      
      <ul class="gallery-info-list" >
 
@@ -15,7 +15,7 @@ import{a as w,i as y,S as g}from"./assets/vendor-DEenWwFD.js";(function(){const 
 
      <li class="gallery-card-info">
      <p class = "info-title">Views</p>
-     <p class = "info-data">${a}</p>
+     <p class = "info-data">${i}</p>
      </li>
 
      <li class="gallery-card-info">
@@ -25,10 +25,10 @@ import{a as w,i as y,S as g}from"./assets/vendor-DEenWwFD.js";(function(){const 
 
      <li class="gallery-card-info">
      <p class = "info-title">Downloads</p>
-     <p class = "info-data">${v}</p>
+     <p class = "info-data">${w}</p>
      </li>
 
      </ul>
      </li>
-     </a>`).join(" ")}async function m(l,e,r){return(await w.get("https://pixabay.com/api/",{params:{key:"47546528-1d373426d359327bdc7f920b1",q:`${l}`,image_type:"photo",page:e,per_page:r}})).data}let f;const p=document.querySelector(".continue"),o=document.querySelector(".loader"),S=document.querySelector(".search"),b=document.querySelector(".search-bar"),n=document.querySelector(".gallery");let c,d=1,$=15,u;S.addEventListener("submit",l=>{l.preventDefault(),n.innerHTML="",d=1,o.style.display="block",m(b.value.split(" ").join("+"),1,15).then(e=>{if(e.totalHits===0){y.error({message:"Sorry, there are no images matching your search query. Please, try again!",position:"topRight",color:"#ef4040",messageColor:"#fafafb"}),n.innerHTML="",o.style.display="none";return}if(e.totalHits<=u){p.style.display="none",o.style.display="none";return}p.style.display="flex",n.insertAdjacentHTML("beforeend",`${h(e.hits)}`),d+=1,u=15,f=document.querySelector("body > main > ul > a:nth-child(1)"),c=f.getBoundingClientRect().height,c={top:c*2,left:0,behavior:"smooth"}}).then(()=>{let e=new g(".gallery a",{captionsData:"alt",captionDelay:250});e.on("show.simplelightbox",function(){}),o.style.display="none",e.refresh()})});p.addEventListener("click",l=>{l.preventDefault(),o.style.display="block",m(b.value.split(" ").join("+"),d,$).then(e=>{if(e.totalHits<=u){p.style.display="none",y.info({message:"We're sorry, but you've reached the end of search results.",position:"topRight"}),o.style.display="none";return}n.insertAdjacentHTML("beforeend",`${h(e.hits)}`),d+=1,u+=15,window.scrollBy(c)}).then(()=>{let e=new g(".gallery a",{captionsData:"alt",captionDelay:250});e.on("show.simplelightbox",function(){}),o.style.display="none",e.refresh()})});
+     </a>`).join(" ")}async function h(o,t,l){return(await v.get("https://pixabay.com/api/",{params:{key:"47546528-1d373426d359327bdc7f920b1",q:`${o}`,image_type:"photo",page:t,per_page:l}})).data}let u;const n=document.querySelector(".continue"),a=document.querySelector(".loader"),S=document.querySelector(".search"),b=document.querySelector(".search-bar"),d=document.querySelector(".gallery");let p,f=1,$=15,c=15;S.addEventListener("submit",async o=>{o.preventDefault(),d.innerHTML="",f=1,a.style.display="block";const t=await h(b.value.split(" ").join("+"),1,c);if(t.totalHits===0){y.error({message:"Sorry, there are no images matching your search query. Please, try again!",position:"topRight",color:"#ef4040",messageColor:"#fafafb"}),d.innerHTML="",a.style.display="none",n.style.display="none";return}t.totalHits<=c?n.style.display="none":n.style.display="flex",d.insertAdjacentHTML("beforeend",`${m(t.hits)}`),c=15,u=document.querySelector("body > main > ul > a:nth-child(1)"),p=u.getBoundingClientRect().height,p={top:p*2,left:0,behavior:"smooth"};let l=new g(".gallery a",{captionsData:"alt",captionDelay:250});l.on("show.simplelightbox",function(){}),a.style.display="none",l.refresh()});n.addEventListener("click",async o=>{o.preventDefault(),a.style.display="block",f+=1;const t=await h(b.value.split(" ").join("+"),f,$);if(d.insertAdjacentHTML("beforeend",`${m(t.hits)}`),c+=15,window.scrollBy(p),t.totalHits==c){n.style.display="none",y.info({message:"We're sorry, but you've reached the end of search results.",position:"topRight"}),a.style.display="none";return}let l=new g(".gallery a",{captionsData:"alt",captionDelay:250});l.on("show.simplelightbox",function(){}),a.style.display="none",l.refresh()});
 //# sourceMappingURL=index.js.map
