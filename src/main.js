@@ -19,6 +19,8 @@ let loadedImgs = 15;
 searchForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     gallery.innerHTML = ""
+    contBtn.style.display = `none`;
+    loadedImgs = 15;
     page = 1
     loader.style.display = `block`;
     const data = await fetchImg(search.value.split(" ").join("+"), 1, loadedImgs)
@@ -31,19 +33,15 @@ searchForm.addEventListener("submit", async (event) => {
                 })
                 gallery.innerHTML = ``
                 loader.style.display = `none`;
-                contBtn.style.display = `none`;
                 return
                 }
-                if (data.totalHits <= loadedImgs) {
-                    contBtn.style.display = `none`;
-                } else {
+                if (data.totalHits > loadedImgs) {
                     contBtn.style.display = `flex`
                 }
                 
                 
                 
                 gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
-                loadedImgs = 15;
                 firstCard = document.querySelector("body > main > ul > a:nth-child(1)");
                 scrollParams = firstCard.getBoundingClientRect().height;
                 
