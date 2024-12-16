@@ -15,7 +15,7 @@ let scrollParams
 let page = 1;
 let perPage = 15;
 let loadedImgs = 15;
-
+let lightbox = new SimpleLightbox(`.gallery a`, { captionsData: "alt", captionDelay: 250 })
 searchForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     gallery.innerHTML = ""
@@ -41,25 +41,18 @@ searchForm.addEventListener("submit", async (event) => {
                 
                 
                 
-                gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
-                firstCard = document.querySelector("body > main > ul > a:nth-child(1)");
-                scrollParams = firstCard.getBoundingClientRect().height;
+    gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
+    lightbox.refresh()
+    firstCard = document.querySelector("body > main > ul > a:nth-child(1)");
+    scrollParams = firstCard.getBoundingClientRect().height;
                 
                 
-                scrollParams = {
-                    top: scrollParams * 2,
-                    left: 0,
-                    behavior: "smooth"
-                }
-        
-        
-            let lightbox = new SimpleLightbox(`.gallery a`, { captionsData: "alt", captionDelay: 250 })
-            lightbox.on('show.simplelightbox', function () {
-	 
-            });
-            loader.style.display = `none`;
-            lightbox.refresh()
-        
+    scrollParams = {
+        top: scrollParams * 2,
+        left: 0,
+        behavior: "smooth"
+    }
+    loader.style.display = `none`;
     }
    
 )
@@ -70,28 +63,20 @@ contBtn.addEventListener("click", async (event) => {
     page += 1;
     const data = await fetchImg(search.value.split(" ").join("+"), page, perPage)
             
-            gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
-            loadedImgs += 15;
-            window.scrollBy(scrollParams);
+    gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
+    lightbox.refresh()
+    loadedImgs += 15;
+    window.scrollBy(scrollParams);
 
-                if (data.totalHits == loadedImgs) {  
-                    contBtn.style.display = `none`;
-                iziToast.info({
-                    message: "We're sorry, but you've reached the end of search results.",
-                    position: "topRight"
-                })
-                    loader.style.display = `none`;
-                return
-            }
-                
-            let lightbox = new SimpleLightbox(`.gallery a`, { captionsData: "alt", captionDelay: 250 })
-            lightbox.on('show.simplelightbox', function () {
-	
-            });
-            loader.style.display = `none`;
-            lightbox.refresh()
-        
+    if (data.totalHits <= loadedImgs) {
+        contBtn.style.display = `none`;
+        iziToast.info({
+            message: "We're sorry, but you've reached the end of search results.",
+            position: "topRight"
+        })
+        loader.style.display = `none`;
+        return
     }
-   
-)
-    
+    loader.style.display = `none`;       
+}
+)  
