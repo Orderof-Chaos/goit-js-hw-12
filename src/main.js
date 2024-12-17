@@ -32,7 +32,8 @@ searchForm.addEventListener("submit", async (event) => {
                     color: "#ef4040",
                     messageColor: "#fafafb"
                 })
-                gallery.innerHTML = ``;
+        gallery.innerHTML = ``;
+        loader.style.display = `none`;
                 return
     }
     search.value = ""
