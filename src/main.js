@@ -18,21 +18,23 @@ let loadedImgs = 15;
 let lightbox = new SimpleLightbox(`.gallery a`, { captionsData: "alt", captionDelay: 250 })
 searchForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    loader.style.display = `block`;
     gallery.innerHTML = ""
     contBtn.style.display = `none`;
     loadedImgs = 15;
-    page = 1
-    loader.style.display = `block`;
-    const data = await fetchImg(search.value.split(" ").join("+"), 1, loadedImgs)
-            if (data.totalHits === 0) {
-                iziToast.error({
+    page = 1;
+    try {
+        const data = await fetchImg(search.value.trim().split(" ").join("+"), 1, loadedImgs)
+        
+    if (data.totalHits === 0) {
+        loader.style.display = `none`;
+        iziToast.error({
                     message: "Sorry, there are no images matching your search query. Please, try again!",
                     position: "topRight",
                     color: "#ef4040",
                     messageColor: "#fafafb"
                 })
-                gallery.innerHTML = ``
-                loader.style.display = `none`;
+                gallery.innerHTML = ``;
                 return
                 }
                 if (data.totalHits > loadedImgs) {
@@ -42,6 +44,7 @@ searchForm.addEventListener("submit", async (event) => {
                 
                 
     gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
+    loader.style.display = `none`;
     lightbox.refresh()
     firstCard = document.querySelector("body > main > ul > a:nth-child(1)");
     scrollParams = firstCard.getBoundingClientRect().height;
@@ -52,31 +55,41 @@ searchForm.addEventListener("submit", async (event) => {
         left: 0,
         behavior: "smooth"
     }
-    loader.style.display = `none`;
+    } catch(error) {
+        loader.style.display = `none`;
+        contBtn.style.display = `none`;
+        iziToast.error({
+                    message: `Sorry, a ${error} error occurred`,
+                    position: "topRight",
+                    color: "#ef4040",
+                    messageColor: "#fafafb"
+                })
+                gallery.innerHTML = ``;}
     }
    
 )
     
 contBtn.addEventListener("click", async (event) => {
     event.preventDefault();
+    contBtn.style.display = `none`;
     loader.style.display = `block`;
     page += 1;
-    const data = await fetchImg(search.value.split(" ").join("+"), page, perPage)
-            
+    const data = await fetchImg(search.value.trim().split(" ").join("+"), page, perPage)
+     
     gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
+    loader.style.display = `none`;
     lightbox.refresh()
     loadedImgs += 15;
-    window.scrollBy(scrollParams);
-
     if (data.totalHits <= loadedImgs) {
+        loader.style.display = `none`;
         contBtn.style.display = `none`;
         iziToast.info({
             message: "We're sorry, but you've reached the end of search results.",
             position: "topRight"
         })
-        loader.style.display = `none`;
         return
     }
-    loader.style.display = `none`;       
+    window.scrollBy(scrollParams);
+    contBtn.style.display = `flex`;
 }
 )  
