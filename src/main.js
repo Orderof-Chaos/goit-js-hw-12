@@ -74,7 +74,7 @@ contBtn.addEventListener("click", async (event) => {
     contBtn.style.display = `none`;
     loader.style.display = `block`;
     page += 1;
-    const data = await fetchImg(search.value.trim().split(" ").join("+"), page, perPage)
+    try{const data = await fetchImg(search.value.trim().split(" ").join("+"), page, perPage)
      
     gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
     loader.style.display = `none`;
@@ -90,6 +90,16 @@ contBtn.addEventListener("click", async (event) => {
         return
     }
     window.scrollBy(scrollParams);
-    contBtn.style.display = `flex`;
+        contBtn.style.display = `flex`;
+    } catch (error) {
+        loader.style.display = `none`;
+        contBtn.style.display = `none`;
+        iziToast.error({
+                    message: `Sorry, a ${error} error occurred`,
+                    position: "topRight",
+                    color: "#ef4040",
+                    messageColor: "#fafafb"
+                })
+                gallery.innerHTML = ``;}
 }
 )  
