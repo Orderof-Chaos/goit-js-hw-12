@@ -25,6 +25,16 @@ searchForm.addEventListener("submit", async (event) => {
     loadedImgs = 15;
     page = 1;
     request = search.value.trim().split(" ").join("+")
+    if (request === "") {
+        iziToast.error({
+                    message: `Please fill in the "search images..." field.`,
+                    position: "topRight",
+                    color: "#ef4040",
+                    messageColor: "#fafafb"
+                })
+                gallery.innerHTML = ``;
+                return
+    }
     search.value = ""
     try {
         const data = await fetchImg(request, 1, loadedImgs)
