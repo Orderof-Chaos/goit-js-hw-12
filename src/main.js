@@ -11,6 +11,7 @@ const loader = document.querySelector(".loader")
 const searchForm = document.querySelector(".search")
 const search = document.querySelector(".search-bar")
 const gallery = document.querySelector(".gallery")
+let request
 let scrollParams
 let page = 1;
 let perPage = 15;
@@ -23,8 +24,11 @@ searchForm.addEventListener("submit", async (event) => {
     contBtn.style.display = `none`;
     loadedImgs = 15;
     page = 1;
+    request = search.value.trim().split(" ").join("+")
+    search.value = ""
     try {
-        const data = await fetchImg(search.value.trim().split(" ").join("+"), 1, loadedImgs)
+        const data = await fetchImg(request, 1, loadedImgs)
+        
         
     if (data.totalHits === 0) {
         loader.style.display = `none`;
@@ -74,8 +78,7 @@ contBtn.addEventListener("click", async (event) => {
     contBtn.style.display = `none`;
     loader.style.display = `block`;
     page += 1;
-    try{const data = await fetchImg(search.value.trim().split(" ").join("+"), page, perPage)
-     
+    try{const data = await fetchImg(request, page, perPage)
     gallery.insertAdjacentHTML("beforeend", `${createMarkup(data.hits)}`)
     loader.style.display = `none`;
     lightbox.refresh()
